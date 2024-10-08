@@ -10,7 +10,7 @@ os.makedirs(log_dir,exist_ok=True)
 
 logging.basicConfig(level=logging.INFO,
                      format=logging_str,
-                     handlers=[logging.fileHandler(log_filepath),
+                     handlers=[logging.FileHandler(log_filepath),
                          logging.StreamHandler(sys.stdout)])
 
 logger=logging.getLogger("Textsummerizerlogger")
