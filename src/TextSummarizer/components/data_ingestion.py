@@ -1,6 +1,8 @@
 import os
 import urllib.request as request
 import zipfile
+import requests
+import shutil
 from TextSummarizer.logging import logger
 from TextSummarizer.utils.common import get_size
 from pathlib import Path
@@ -15,10 +17,23 @@ class DataIngestion:
     
     def download_file(self):
         if not os.path.exists(self.config.local_data_file):
-            filename, headers = request.urlretrieve(
-                url = self.config.source_URL,
-                filename = self.config.local_data_file
-            )
+            response = requests.get(self.config.source_URL, stream=True)
+            response.raise_for_status()  # Check for HTTP errors
+
+            if 'Content-Disposition' in response.headers:
+                filename = response.headers['Content-Disposition'].split('filename=')[-1].strip('"')
+                logger.info(f"Downloading file as: {filename}")
+            else:
+                filename = self.config.local_data_file  # Use the configured filename
+
+            with open(filename, "wb") as f:
+             shutil.copyfileobj(response.raw, f)
+            filename = self.config.local_data_file
+            headers= self.config.source_URL
+            # filename, headers = request.urlretrieve(
+            #     url = self.config.source_URL,
+            #     filename = self.config.local_data_file
+            # )
             logger.info(f"{filename} download! with following info: \n{headers}")
         else:
             logger.info(f"File already exists of size: {get_size(Path(self.config.local_data_file))}")  

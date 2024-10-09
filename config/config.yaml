@@ -2,6 +2,6 @@ artifacts_root: artifacts
 
 dataingestion:
    root_dir: artifacts/data_ingestion
-   source_URL: https://github.com/entbappy/Branching-tutorial/blob/master/samsumdata.zip
-   local_data_file: artifacts/data_ingestion/data.zip
+   source_URL: https://github.com/entbappy/Branching-tutorial/raw/refs/heads/master/samsumdata.zip
+   local_data_file: artifacts/data_ingestion/samsumdata.zip
    unzip_dir: artifacts/data_ingestion
