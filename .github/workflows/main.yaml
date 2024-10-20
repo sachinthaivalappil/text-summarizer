@@ -3,7 +3,7 @@ name: workflow
 on:
   push:
     branches:
-      - main
+      - new-2020
     paths-ignore:
       - 'README.md'
 
